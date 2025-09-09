@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASB Investment Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-soft': 'pulseSoft 2s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseSoft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .highlight-update {
+            background: linear-gradient(90deg, #dbeafe, #bfdbfe);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">ASB Investment Calculator</h1>
+                <p class="text-gray-600">Compare Direct Savings vs ASBF Financing Strategy</p>
+                <div class="mt-3">
+                    <span id="status" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 animate-pulse-soft">
+                        Ready
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        <!-- Controls -->
+        <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Investment Parameters</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Monthly Payment</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">RM</span>
+                        <input type="number" id="monthly-payment" value="867" min="100" step="10"
+                               class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">ASB Return Rate</label>
+                    <div class="relative">
+                        <input type="number" id="asb-return" value="5" min="1" max="15" step="0.1"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-lg">
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">ASBF Interest Rate</label>
+                    <div class="relative">
+                        <input type="number" id="loan-rate" value="4.25" min="1" max="10" step="0.05"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-lg">
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Loan Amount</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">RM</span>
+                        <input type="number" id="loan-amount" value="200000" min="50000" step="10000"
+                               class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Direct Savings -->
+            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-emerald-900">Direct ASB Savings</h3>
+                    <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="text-3xl font-bold text-emerald-900">
+                        RM <span id="direct-final">0</span>
+                    </div>
+                    <div class="space-y-1 text-sm text-emerald-700">
+                        <div class="flex justify-between">
+                            <span>Total Invested:</span>
+                            <span class="font-medium">RM <span id="direct-total-invested">0</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Total Returns:</span>
+                            <span class="font-medium">RM <span id="direct-total-returns">0</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>ROI:</span>
+                            <span class="font-medium"><span id="direct-roi">0%</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ASBF Strategy -->
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border border-orange-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-orange-900">ASBF Financing</h3>
+                    <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="text-3xl font-bold text-orange-900">
+                        RM <span id="asbf-final">0</span>
+                    </div>
+                    <div class="space-y-1 text-sm text-orange-700">
+                        <div class="flex justify-between">
+                            <span>Total Payments:</span>
+                            <span class="font-medium">RM <span id="asbf-total-paid">0</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Net Profit:</span>
+                            <span class="font-medium">RM <span id="asbf-net-profit">0</span></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>ROI:</span>
+                            <span class="font-medium"><span id="asbf-roi">0%</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-blue-900">Better Strategy</h3>
+                    <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="text-3xl font-bold text-blue-900">
+                        RM <span id="difference">0</span>
+                    </div>
+                    <div class="space-y-1 text-sm text-blue-700">
+                        <div class="font-medium"><span id="winner">Calculating...</span></div>
+                        <div class="flex justify-between">
+                            <span>Advantage:</span>
+                            <span class="font-medium"><span id="advantage-percentage">0%</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tables -->
+        <section class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <!-- Direct Savings Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-6">
+                    <h3 class="text-xl font-semibold">Direct ASB Savings</h3>
+                    <p class="text-emerald-100 mt-1">
+                        Monthly RM <span id="direct-monthly-display">867</span> • <span id="direct-return-display">5</span>% annual return
+                    </p>
+                </div>
+                <div class="overflow-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Year</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Beginning</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Investment</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Return</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="direct-table-body" class="divide-y divide-gray-100">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ASBF Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6">
+                    <h3 class="text-xl font-semibold">ASBF Financing Strategy</h3>
+                    <p class="text-orange-100 mt-1">
+                        RM <span id="asbf-loan-display">200,000</span> loan • <span id="asbf-rate-display">4.25</span>% interest
+                    </p>
+                </div>
+                <div class="overflow-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Year</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">ASB Balance</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Loan Outstanding</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">ASB Return</th>
+                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Net Equity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="asbf-table-body" class="divide-y divide-gray-100">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Verification Section -->
+        <section class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+            <h3 class="text-lg font-semibold text-amber-900 mb-4">Calculation Verification</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div class="space-y-3">
+                    <h4 class="font-medium text-amber-900">Direct Savings Formula</h4>
+                    <div class="space-y-1 text-amber-800">
+                        <div>Monthly Investment: RM <span id="verification-payment">867</span></div>
+                        <div>Annual Return: <span id="verification-return">5</span>%</div>
+                        <div>Investment Period: 40 years</div>
+                        <div class="text-xs bg-white p-2 rounded border font-mono">
+                            FV = PMT × [((1+r)^n - 1) / r]
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="font-medium text-amber-900">ASBF Strategy Details</h4>
+                    <div class="space-y-1 text-amber-800">
+                        <div>Initial Loan: RM <span id="verification-loan-amount">200,000</span></div>
+                        <div>ASB Return: <span id="verification-asb-return">5</span>%</div>
+                        <div>Loan Interest: <span id="verification-loan-rate">4.25</span>%</div>
+                        <div>Monthly Rate: <span id="monthly-rate-display">0.354</span>%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white/50 backdrop-blur-sm border-t border-gray-200/50 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Personal Note -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 border border-blue-100">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Research Note</h3>
+                <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                    As a software engineer exploring investment diversification strategies, I built this calculator to analyze and compare ASB investment approaches. 
+                    This tool combines my technical expertise with the power of AI assistance, creating a comprehensive solution that helps visualize the long-term impact of different investment strategies.
+                </p>
+                <div class="flex items-center text-xs text-gray-500">
+                    <span class="bg-white px-2 py-1 rounded-full border">Software Engineer</span>
+                    <span class="mx-2">•</span>
+                    <span class="bg-white px-2 py-1 rounded-full border">AI-Powered</span>
+                    <span class="mx-2">•</span>
+                    <span class="bg-white px-2 py-1 rounded-full border">Investment Research</span>
+                </div>
+            </div>
+            
+            <!-- Signature -->
+            <div class="text-center text-gray-600 text-sm">
+                <p>ASB Investment Calculator • Built for GitHub Pages</p>
+                <p class="mt-2 text-xs text-gray-500">
+                    Research & Development by <span class="font-medium text-gray-700">Ariff Norhadi</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-MY').format(Math.round(amount));
+        }
+
+        function updateStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                type === 'success' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+            }`;
+        }
+
+        function addHighlightEffect(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.add('highlight-update');
+                setTimeout(() => element.classList.remove('highlight-update'), 1000);
+            }
+        }
+
+        function calculateDirectSavings(monthlyPayment, annualReturn, years) {
+            const results = [];
+            const monthlyRate = annualReturn / 100 / 12;
+            let balance = 0;
+            
+            for (let year = 1; year <= years; year++) {
+                const beginningBalance = balance;
+                let annualReturnAmount = 0;
+                
+                for (let month = 1; month <= 12; month++) {
+                    const monthlyReturn = balance * monthlyRate;
+                    balance += monthlyPayment + monthlyReturn;
+                    annualReturnAmount += monthlyReturn;
+                }
+                
+                results.push({
+                    year,
+                    beginningBalance,
+                    annualInvestment: monthlyPayment * 12,
+                    returnAmount: annualReturnAmount,
+                    endingBalance: balance
+                });
+            }
+            
+            return results;
+        }
+
+        function calculateASBF(loanAmount, monthlyPayment, loanRate, asbReturn, years) {
+            const results = [];
+            let loanBalance = loanAmount;
+            let asbBalance = loanAmount;
+            const monthlyLoanRate = loanRate / 100 / 12;
+            
+            for (let year = 1; year <= years; year++) {
+                const annualASBReturn = asbBalance * (asbReturn / 100);
+                asbBalance += annualASBReturn;
+                
+                for (let month = 1; month <= 12; month++) {
+                    if (loanBalance > 0) {
+                        const interestPayment = loanBalance * monthlyLoanRate;
+                        const principalPayment = Math.min(monthlyPayment - interestPayment, loanBalance);
+                        loanBalance = Math.max(0, loanBalance - principalPayment);
+                    }
+                }
+                
+                const netEquity = Math.max(0, asbBalance - loanBalance);
+                
+                results.push({
+                    year,
+                    asbBalance,
+                    loanBalance,
+                    asbReturn: annualASBReturn,
+                    netEquity
+                });
+            }
+            
+            return results;
+        }
+
+        function updateTables(directResults, asbfResults) {
+            const directTableBody = document.getElementById('direct-table-body');
+            const asbfTableBody = document.getElementById('asbf-table-body');
+            
+            directTableBody.innerHTML = '';
+            asbfTableBody.innerHTML = '';
+            
+            directResults.forEach(row => {
+                const tr = document.createElement('tr');
+                const isHighlightYear = [5, 10, 15, 20, 25, 30, 35, 40].includes(row.year);
+                if (isHighlightYear) tr.className = 'bg-emerald-50';
+                
+                tr.innerHTML = `
+                    <td class="px-4 py-3 text-sm font-medium text-gray-900">${row.year}</td>
+                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.beginningBalance)}</td>
+                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.annualInvestment)}</td>
+                    <td class="px-4 py-3 text-sm text-right text-emerald-600">RM ${formatCurrency(row.returnAmount)}</td>
+                    <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.endingBalance)}</td>
+                `;
+                directTableBody.appendChild(tr);
+            });
+
+            asbfResults.forEach(row => {
+                const tr = document.createElement('tr');
+                const isHighlightYear = [5, 10, 15, 20, 25, 30, 35, 40].includes(row.year);
+                if (isHighlightYear) tr.className = 'bg-orange-50';
+                
+                tr.innerHTML = `
+                    <td class="px-4 py-3 text-sm font-medium text-gray-900">${row.year}</td>
+                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.asbBalance)}</td>
+                    <td class="px-4 py-3 text-sm text-right text-red-600">RM ${formatCurrency(row.loanBalance)}</td>
+                    <td class="px-4 py-3 text-sm text-right text-orange-600">RM ${formatCurrency(row.asbReturn)}</td>
+                    <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.netEquity)}</td>
+                `;
+                asbfTableBody.appendChild(tr);
+            });
+        }
+
+        function updateSummary(directResults, asbfResults, monthlyPayment) {
+            const directFinal = directResults[directResults.length - 1];
+            const asbfFinal = asbfResults[asbfResults.length - 1];
+            
+            const totalInvested = monthlyPayment * 12 * 40;
+            const directTotalReturns = directFinal.endingBalance - totalInvested;
+            const directROI = ((directFinal.endingBalance - totalInvested) / totalInvested) * 100;
+            
+            const asbfNetProfit = asbfFinal.netEquity - totalInvested;
+            const asbfROI = (asbfNetProfit / totalInvested) * 100;
+            
+            const difference = directFinal.endingBalance - asbfFinal.netEquity;
+            const advantagePercentage = Math.abs((difference / Math.min(directFinal.endingBalance, asbfFinal.netEquity)) * 100);
+
+            // Update summary with highlight effects
+            document.getElementById('direct-final').textContent = formatCurrency(directFinal.endingBalance);
+            document.getElementById('direct-total-invested').textContent = formatCurrency(totalInvested);
+            document.getElementById('direct-total-returns').textContent = formatCurrency(directTotalReturns);
+            document.getElementById('direct-roi').textContent = directROI.toFixed(1) + '%';
+
+            document.getElementById('asbf-final').textContent = formatCurrency(asbfFinal.netEquity);
+            document.getElementById('asbf-total-paid').textContent = formatCurrency(totalInvested);
+            document.getElementById('asbf-net-profit').textContent = formatCurrency(asbfNetProfit);
+            document.getElementById('asbf-roi').textContent = asbfROI.toFixed(1) + '%';
+
+            document.getElementById('difference').textContent = formatCurrency(Math.abs(difference));
+            document.getElementById('winner').textContent = difference > 0 ? 'Direct Savings Better' : 'ASBF Strategy Better';
+            document.getElementById('advantage-percentage').textContent = advantagePercentage.toFixed(1) + '%';
+
+            // Add highlight effects
+            ['direct-final', 'asbf-final', 'difference'].forEach(addHighlightEffect);
+        }
+
+        function updateDisplayValues(monthlyPayment, asbReturn, loanRate, loanAmount) {
+            document.getElementById('direct-monthly-display').textContent = formatCurrency(monthlyPayment);
+            document.getElementById('direct-return-display').textContent = asbReturn;
+            document.getElementById('asbf-loan-display').textContent = formatCurrency(loanAmount);
+            document.getElementById('asbf-rate-display').textContent = loanRate;
+            
+            document.getElementById('verification-payment').textContent = formatCurrency(monthlyPayment);
+            document.getElementById('verification-return').textContent = asbReturn;
+            document.getElementById('verification-asb-return').textContent = asbReturn;
+            document.getElementById('verification-loan-amount').textContent = formatCurrency(loanAmount);
+            document.getElementById('verification-loan-rate').textContent = loanRate;
+            document.getElementById('monthly-rate-display').textContent = (loanRate / 12).toFixed(3);
+        }
+
+        function calculateComparison() {
+            updateStatus('Calculating...', 'processing');
+            
+            const monthlyPayment = parseFloat(document.getElementById('monthly-payment').value);
+            const asbReturn = parseFloat(document.getElementById('asb-return').value);
+            const loanRate = parseFloat(document.getElementById('loan-rate').value);
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            
+            updateDisplayValues(monthlyPayment, asbReturn, loanRate, loanAmount);
+            
+            const directResults = calculateDirectSavings(monthlyPayment, asbReturn, 40);
+            const asbfResults = calculateASBF(loanAmount, monthlyPayment, loanRate, asbReturn, 40);
+            
+            updateTables(directResults, asbfResults);
+            updateSummary(directResults, asbfResults, monthlyPayment);
+            
+            updateStatus(`Updated ${new Date().toLocaleTimeString()}`);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateComparison();
+            
+            ['monthly-payment', 'asb-return', 'loan-rate', 'loan-amount'].forEach(id => {
+                document.getElementById(id).addEventListener('input', calculateComparison);
+            });
+        });
+    </script>
+</body>
+</html>
