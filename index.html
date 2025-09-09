@@ -48,10 +48,10 @@
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
     <!-- Header -->
     <header class="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:py-6">
             <div class="text-center">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">ASB Investment Calculator</h1>
-                <p class="text-gray-600">Compare Direct Savings vs ASBF Financing Strategy</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">ASB Investment Calculator</h1>
+                <p class="text-sm sm:text-base text-gray-600">Compare Direct Savings vs ASBF Financing Strategy</p>
                 <div class="mt-3">
                     <span id="status" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 animate-pulse-soft">
                         Ready
@@ -61,11 +61,11 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <main class="max-w-7xl mx-auto px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         <!-- Controls -->
-        <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <h2 class="text-lg font-semibold text-gray-900 mb-4">Investment Parameters</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Monthly Payment</label>
                     <div class="relative">
@@ -102,15 +102,15 @@
         </section>
 
         <!-- Summary Cards -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <!-- Direct Savings -->
-            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
+            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 sm:p-6 border border-emerald-100">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-semibold text-emerald-900">Direct ASB Savings</h3>
                     <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
                 </div>
                 <div class="space-y-3">
-                    <div class="text-3xl font-bold text-emerald-900">
+                    <div class="text-2xl sm:text-3xl font-bold text-emerald-900">
                         RM <span id="direct-final">0</span>
                     </div>
                     <div class="space-y-1 text-sm text-emerald-700">
@@ -131,13 +131,13 @@
             </div>
 
             <!-- ASBF Strategy -->
-            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border border-orange-100">
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-4 sm:p-6 border border-orange-100">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-semibold text-orange-900">ASBF Financing</h3>
                     <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
                 </div>
                 <div class="space-y-3">
-                    <div class="text-3xl font-bold text-orange-900">
+                    <div class="text-2xl sm:text-3xl font-bold text-orange-900">
                         RM <span id="asbf-final">0</span>
                     </div>
                     <div class="space-y-1 text-sm text-orange-700">
@@ -158,13 +158,13 @@
             </div>
 
             <!-- Comparison -->
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 sm:p-6 border border-blue-100">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-semibold text-blue-900">Better Strategy</h3>
                     <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                 </div>
                 <div class="space-y-3">
-                    <div class="text-3xl font-bold text-blue-900">
+                    <div class="text-2xl sm:text-3xl font-bold text-blue-900">
                         RM <span id="difference">0</span>
                     </div>
                     <div class="space-y-1 text-sm text-blue-700">
@@ -179,24 +179,24 @@
         </section>
 
         <!-- Tables -->
-        <section class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <section class="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8">
             <!-- Direct Savings Table -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-6">
-                    <h3 class="text-xl font-semibold">Direct ASB Savings</h3>
-                    <p class="text-emerald-100 mt-1">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-4 sm:p-6">
+                    <h3 class="text-lg sm:text-xl font-semibold">Direct ASB Savings</h3>
+                    <p class="text-emerald-100 mt-1 text-sm sm:text-base">
                         Monthly RM <span id="direct-monthly-display">867</span> • <span id="direct-return-display">5</span>% annual return
                     </p>
                 </div>
-                <div class="overflow-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                    <table class="w-full">
+                <div class="overflow-auto max-h-80 sm:max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <table class="w-full min-w-[600px]">
                         <thead class="bg-gray-50 sticky top-0">
                             <tr>
-                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Year</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Beginning</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Investment</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Return</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Balance</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Year</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Beginning</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Investment</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Return</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Balance</th>
                             </tr>
                         </thead>
                         <tbody id="direct-table-body" class="divide-y divide-gray-100">
@@ -207,21 +207,21 @@
 
             <!-- ASBF Table -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6">
-                    <h3 class="text-xl font-semibold">ASBF Financing Strategy</h3>
-                    <p class="text-orange-100 mt-1">
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 sm:p-6">
+                    <h3 class="text-lg sm:text-xl font-semibold">ASBF Financing Strategy</h3>
+                    <p class="text-orange-100 mt-1 text-sm sm:text-base">
                         RM <span id="asbf-loan-display">200,000</span> loan • <span id="asbf-rate-display">4.25</span>% interest
                     </p>
                 </div>
-                <div class="overflow-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                    <table class="w-full">
+                <div class="overflow-auto max-h-80 sm:max-h-96 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    <table class="w-full min-w-[600px]">
                         <thead class="bg-gray-50 sticky top-0">
                             <tr>
-                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-900">Year</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">ASB Balance</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Loan Outstanding</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">ASB Return</th>
-                                <th class="px-4 py-3 text-right text-sm font-medium text-gray-900">Net Equity</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Year</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">ASB Balance</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Loan Outstanding</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">ASB Return</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-medium text-gray-900">Net Equity</th>
                             </tr>
                         </thead>
                         <tbody id="asbf-table-body" class="divide-y divide-gray-100">
@@ -232,9 +232,9 @@
         </section>
 
         <!-- Verification Section -->
-        <section class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+        <section class="bg-amber-50 rounded-2xl p-4 sm:p-6 border border-amber-200">
             <h3 class="text-lg font-semibold text-amber-900 mb-4">Calculation Verification</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm">
                 <div class="space-y-3">
                     <h4 class="font-medium text-amber-900">Direct Savings Formula</h4>
                     <div class="space-y-1 text-amber-800">
@@ -259,20 +259,20 @@
         </section>
     </main>
 
-    <footer class="bg-white/50 backdrop-blur-sm border-t border-gray-200/50 mt-16 py-8">
+    <footer class="bg-white/50 backdrop-blur-sm border-t border-gray-200/50 mt-8 sm:mt-16 py-6 sm:py-8">
         <div class="max-w-7xl mx-auto px-4">
             <!-- Personal Note -->
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 border border-blue-100">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-blue-100">
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Research Note</h3>
                 <p class="text-gray-700 text-sm leading-relaxed mb-3">
                     As a software engineer exploring investment diversification strategies, I built this calculator to analyze and compare ASB investment approaches. 
                     This tool combines my technical expertise with the power of AI assistance, creating a comprehensive solution that helps visualize the long-term impact of different investment strategies.
                 </p>
-                <div class="flex items-center text-xs text-gray-500">
+                <div class="flex flex-wrap items-center text-xs text-gray-500 gap-2">
                     <span class="bg-white px-2 py-1 rounded-full border">Software Engineer</span>
-                    <span class="mx-2">•</span>
+                    <span class="hidden sm:inline">•</span>
                     <span class="bg-white px-2 py-1 rounded-full border">AI-Powered</span>
-                    <span class="mx-2">•</span>
+                    <span class="hidden sm:inline">•</span>
                     <span class="bg-white px-2 py-1 rounded-full border">Investment Research</span>
                 </div>
             </div>
@@ -380,11 +380,11 @@
                 if (isHighlightYear) tr.className = 'bg-emerald-50';
                 
                 tr.innerHTML = `
-                    <td class="px-4 py-3 text-sm font-medium text-gray-900">${row.year}</td>
-                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.beginningBalance)}</td>
-                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.annualInvestment)}</td>
-                    <td class="px-4 py-3 text-sm text-right text-emerald-600">RM ${formatCurrency(row.returnAmount)}</td>
-                    <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.endingBalance)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium text-gray-900">${row.year}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-gray-700">RM ${formatCurrency(row.beginningBalance)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-gray-700">RM ${formatCurrency(row.annualInvestment)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-emerald-600">RM ${formatCurrency(row.returnAmount)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.endingBalance)}</td>
                 `;
                 directTableBody.appendChild(tr);
             });
@@ -395,11 +395,11 @@
                 if (isHighlightYear) tr.className = 'bg-orange-50';
                 
                 tr.innerHTML = `
-                    <td class="px-4 py-3 text-sm font-medium text-gray-900">${row.year}</td>
-                    <td class="px-4 py-3 text-sm text-right text-gray-700">RM ${formatCurrency(row.asbBalance)}</td>
-                    <td class="px-4 py-3 text-sm text-right text-red-600">RM ${formatCurrency(row.loanBalance)}</td>
-                    <td class="px-4 py-3 text-sm text-right text-orange-600">RM ${formatCurrency(row.asbReturn)}</td>
-                    <td class="px-4 py-3 text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.netEquity)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium text-gray-900">${row.year}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-gray-700">RM ${formatCurrency(row.asbBalance)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-red-600">RM ${formatCurrency(row.loanBalance)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right text-orange-600">RM ${formatCurrency(row.asbReturn)}</td>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right font-semibold text-gray-900">RM ${formatCurrency(row.netEquity)}</td>
                 `;
                 asbfTableBody.appendChild(tr);
             });
